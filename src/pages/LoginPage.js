@@ -31,7 +31,7 @@ const LoginPage = () => {
         },
       });
       if (response.status === 200) {
-        dispatch(setLoggedInUser(response.data.data));
+        dispatch(setLoggedInUser(response.data));
         dispatch(setLoggedInStatus(true));
         navigate("/administrator-dashboard", { replace: true });
       }

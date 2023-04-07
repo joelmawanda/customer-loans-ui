@@ -8,7 +8,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { setLoggedInStatus, setLoggedInUser } from "../../store/userSlice";
+
 
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
@@ -22,10 +25,18 @@ export default function MenuAppBar() {
     setAnchorEl(event.currentTarget);
   };
 
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  //   navigate("/");
+  // };
+
   const handleClose = () => {
-    setAnchorEl(null);
+    dispatch(setLoggedInUser({}));
+    dispatch(setLoggedInStatus(false));
     navigate("/");
   };
 
