@@ -1,5 +1,6 @@
 .full_blue_bg {
-  background-image: linear-gradient(#0033A1,#000029);
+  /* background-image: linear-gradient(#0033A1,#000029); */
+  background-image: linear-gradient(#8080ff,#0147ab);
   height: 100vh;
 }
 .main_column {
@@ -12,7 +13,7 @@
   height: 370px;
 }
 #login_btn{
-  background-color: #0033A1;
+  background-color: #0147ab;
   width: 100%;}
 #b_boarder_input{
   border-top: none;
