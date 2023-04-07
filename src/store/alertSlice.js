@@ -12,8 +12,6 @@ const alertSlice = createSlice({
         openAlert: (state, action) => {
             console.log('In OpenAlert');
             state.open = true;
-            // timerFinished();
-            // state.open != state.open;
         },
         closeAlert: (state, action) => {
             console.log('In closeAlert');
@@ -27,8 +25,6 @@ const alertSlice = createSlice({
             console.log('In setAlertTitle. action:', action.payload);
             state.title = action.payload;
         },
-        // setAlertTimer: (state, action) => {
-        // }
     },
 });
 

@@ -1,15 +1,48 @@
 import { mdiAccount, mdiLock } from "@mdi/js";
 import Icon from "@mdi/react";
+import { useState } from "react";
 import { Button, Form, Nav } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import AlertModal from "../components/alertModal";
+import API from "../config/API";
+import { openAlert, setAlertMessage, setAlertTitle } from "../store/alertSlice";
+import { setLoggedInStatus, setLoggedInUser } from "../store/userSlice";
 import "./LoginPage.css";
-// import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const alert = useSelector((state) => state.alert);
+
+  const login = async (event) => {
+    event.preventDefault();
+    let data = { username, password };
+    try {
+      const response = await API.post(`/authenticate`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
+      if (response.status === 200) {
+        dispatch(setLoggedInUser(response.data.data));
+        dispatch(setLoggedInStatus(true));
+        navigate("/administrator-dashboard", { replace: true });
+      }
+    } catch (error) {
+      console.log("We are in the login catch... Error: ", error);
+      dispatch(setAlertMessage("Invalid User"));
+      dispatch(setAlertTitle("Error"));
+      dispatch(openAlert());
+      navigate("/", { replace: true });
+    }
+  };
 
   return (
     <div className="full_blue_bg">
@@ -17,6 +50,13 @@ const LoginPage = () => {
       <Row className="justify-content-md-center main_row">
         <Col sm={3} md={3} lg={4} style={{ paddingTop: "3%" }}></Col>
         <Col sm={6} md={6} lg={4} style={{ paddingTop: "3%" }}>
+          {alert.open === true ? (
+            <AlertModal
+              sx={{ margin: "20px", width: "50%", align: "right" }}
+            ></AlertModal>
+          ) : (
+            <></>
+          )}
           <Row style={{ paddingTop: "10%" }}>
             <h3 className="primary-header">Customer Loans Management System</h3>
           </Row>
@@ -33,7 +73,7 @@ const LoginPage = () => {
               </Row>
 
               <Card.Body>
-                <Form>
+                <Form onSubmit={login}>
                   <Form.Group className="mb-3" controlId="formGroupEmail">
                     <Row>
                       <Col id="input_icon" sm={2} md={2} lg={2}>
@@ -49,6 +89,7 @@ const LoginPage = () => {
                         <Form.Control
                           id="b_boarder_input"
                           placeholder="Username/Email/Phone"
+                          onChange={(e) => setUsername(e.target.value)}
                         ></Form.Control>
                       </Col>
                     </Row>
@@ -80,6 +121,7 @@ const LoginPage = () => {
                           id="b_boarder_input"
                           type="password"
                           placeholder="Password"
+                          onChange={(e) => setPassword(e.target.value)}
                         />
                       </Col>
                     </Row>
@@ -90,8 +132,7 @@ const LoginPage = () => {
                       <Button
                         id="login_btn"
                         className="login_btn"
-                        as={Link}
-                        to="/administrator-dashboard"
+                        type="submit"
                       >
                         Login
                       </Button>

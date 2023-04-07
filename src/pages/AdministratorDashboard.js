@@ -12,7 +12,7 @@ const AdministratorDashboard = () => {
   const navigationContext = useContext(NavigationContext);
   const { sidebar } = navigationContext;
   const dispatch = useDispatch();
-  const alert = useSelector((state) => state.alert);
+  const user = useSelector((state) => state.user);
 
   // useEffect(() => {
   //   if (user.ticketStatus === "idle") {
