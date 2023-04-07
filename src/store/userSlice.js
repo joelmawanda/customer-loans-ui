@@ -12,17 +12,12 @@ const userSlice = createSlice({
       state.loggedInUser = action.payload;
     },
     setLoggedInStatus: (state, action) => {
-      console.log("isLoggedInStatus has been set to: ", action.payload);
-      state.isLoggedInStatus = action.payload;
-    },
+        console.log('isLoggedInStatus has been set to: ', action.payload);
+        state.isLoggedInStatus = action.payload;
+      },
   },
 });
 
-export const {
-  setLoggedInUser,
-  setLoggedInStatus,
-  setMeasurements,
-  setAvailableTags,
-} = userSlice.actions;
+export const { setLoggedInUser, setLoggedInStatus } = userSlice.actions;
 
 export default userSlice.reducer;
