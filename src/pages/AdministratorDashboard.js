@@ -19,7 +19,7 @@ const AdministratorDashboard = () => {
 
   useEffect(() => {
     getMetrics();
-  }, []);
+  }, [measurements]);
 
   const getMetrics = async () => {
     try {
@@ -65,8 +65,8 @@ const AdministratorDashboard = () => {
         <Grid item md={3}>
           <ShareholderCard
             icon={<GroupsIcon fontSize="large" sx={{ color: "#01422A" }} />}
-            shareholderCount={0}
-            // shareholderCount={measurements[0].value}
+            // shareholderCount={0}
+            shareholderCount={measurements[0].value}
             name={"Number of Requests"}
           />
         </Grid>
