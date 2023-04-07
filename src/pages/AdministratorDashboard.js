@@ -14,7 +14,8 @@ const AdministratorDashboard = () => {
   const { sidebar } = navigationContext;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const [metrics, setMetrics] = useState({});
+  const [measurements, setMeasurements] = useState([]);
+  const [availableTags, setAvailableTags] = useState([]);
 
   useEffect(() => {
     getMetrics();
@@ -22,7 +23,6 @@ const AdministratorDashboard = () => {
 
   const getMetrics = async () => {
     try {
-      
       const res = await API.get(`/admin/metrics/http.server.requests`, {
         headers: {
           "Content-Type": "application/json",
@@ -31,9 +31,23 @@ const AdministratorDashboard = () => {
         },
       });
       if (res.status === 200) {
-        console.log("These are the metrics: ", res.data);
-        setMetrics(res.data)
-        console.log("These are the persisted metrics: ", metrics);
+        console.log("These are the metrics availableTags: ", res.data.availableTags);
+        console.log("----------------------------------------------");
+        console.log("These are the metrics measurements: ", res.data.measurements);
+        console.log("----------------------------------------------");
+        console.log("These are the metrics availableTags: ");
+        res.data.availableTags.forEach((availableTag) => {
+          console.log(availableTag.tag + ":" + availableTag.values);
+        });
+        console.log("----------------------------------------------");
+        console.log("These are the metrics measurements: ");
+        res.data.measurements.forEach((measurement) => {
+          console.log(measurement.statistic + ":" + measurement.value);
+        });
+        setAvailableTags(res.data.availableTags);
+        setMeasurements(res.data.measurements);
+
+        console.log("Weeeee", measurements[0].value);
       }
     } catch (error) {
       console.log(error);
@@ -51,29 +65,30 @@ const AdministratorDashboard = () => {
         <Grid item md={3}>
           <ShareholderCard
             icon={<GroupsIcon fontSize="large" sx={{ color: "#01422A" }} />}
-            shareholderCount={22975}
-            name={"Shareholders"}
+            // shareholderCount={0}
+            shareholderCount={measurements[0].value}
+            name={"Number of Requests"}
           />
         </Grid>
         <Grid item md={3}>
           <ShareholderCard
             icon={<PeopleIcon fontSize="large" sx={{ color: "#FF9E0C" }} />}
             shareholderCount={22975}
-            name={"SCD Shareholders"}
+            name={"Number of failed validations"}
           />
         </Grid>
         <Grid item md={3}>
           <ShareholderCard
             icon={<ApartmentIcon fontSize="large" sx={{ color: "#10C682" }} />}
             shareholderCount={22975}
-            name={"Company Shareholders"}
+            name={"Number of Positive Requests"}
           />
         </Grid>
         <Grid item md={3}>
           <ShareholderCard
             icon={<GroupsIcon fontSize="large" sx={{ color: "#D37B13" }} />}
             shareholderCount={22975}
-            name={"Foreigner Shareholders"}
+            name={"Number of Negative Requests"}
           />
         </Grid>
       </Grid>

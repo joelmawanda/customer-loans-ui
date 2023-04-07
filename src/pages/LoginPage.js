@@ -19,6 +19,7 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const alert = useSelector((state) => state.alert);
+  const user = useSelector((state) => state.user);
 
   const login = async (event) => {
     event.preventDefault();
