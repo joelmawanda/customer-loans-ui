@@ -33,6 +33,7 @@ const AdministratorDashboard = () => {
       if (res.status === 200) {
         console.log("These are the metrics: ", res.data);
         setMetrics(res.data)
+        console.log("These are the persisted metrics: ", metrics);
       }
     } catch (error) {
       console.log(error);
