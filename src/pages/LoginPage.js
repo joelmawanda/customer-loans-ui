@@ -24,7 +24,7 @@ const LoginPage = () => {
     event.preventDefault();
     let data = { username, password };
     try {
-      const response = await API.post(`/authenticate`, data, {
+      const response = await API.post(`/api/v1/loans/authenticate`, data, {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",

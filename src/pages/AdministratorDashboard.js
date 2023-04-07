@@ -2,10 +2,11 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PeopleIcon from "@mui/icons-material/People";
 import { Box, Grid } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ShareholderCard from "../components/AdministratorDashboard/ShareholderCard";
 import MenuAppBar from "../components/navigation/AppBar";
+import API from "../config/API";
 import NavigationContext from "../store/NavigationContext";
 
 const AdministratorDashboard = () => {
@@ -13,13 +14,30 @@ const AdministratorDashboard = () => {
   const { sidebar } = navigationContext;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const [metrics, setMetrics] = useState({});
 
-  // useEffect(() => {
-  //   if (user.ticketStatus === "idle") {
-  //     dispatch(getTickets());
-  //   }
-  //   console.log("Tickets: ", user.tickets);
-  // }, []);
+  useEffect(() => {
+    getMetrics();
+  }, []);
+
+  const getMetrics = async () => {
+    try {
+      
+      const res = await API.get(`/admin/metrics/http.server.requests`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${user.loggedInUser}`,
+        },
+      });
+      if (res.status === 200) {
+        console.log("These are the metrics: ", res.data);
+        setMetrics(res.data)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Box>
