@@ -1,7 +1,7 @@
 import { mdiAccount, mdiLock } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useState } from "react";
-import { Button, Form, Nav } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -136,19 +136,6 @@ const LoginPage = () => {
                       >
                         Login
                       </Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm={12} md={6} lg={6}></Col>
-                    <Col sm={12} md={6} lg={6} style={{ paddingLeft: "77px" }}>
-                      {" "}
-                      <Nav className="justify-content-center" activeKey="/home">
-                        <Nav.Item>
-                          <Nav.Link href="/" id="f_p_link">
-                            Forgot password?
-                          </Nav.Link>
-                        </Nav.Item>
-                      </Nav>
                     </Col>
                   </Row>
                 </Form>
