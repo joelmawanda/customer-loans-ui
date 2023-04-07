@@ -12,7 +12,7 @@ const userSlice = createSlice({
       state.loggedInUser = action.payload;
     },
     setLoggedInStatus: (state, action) => {
-        console.log('Let us reset our isLoggedInStatus');
+        console.log('isLoggedInStatus has been set to: ', action.payload);
         state.isLoggedInStatus = action.payload;
       },
   },
