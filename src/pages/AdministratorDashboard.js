@@ -17,7 +17,10 @@ const AdministratorDashboard = () => {
   const [measurements, setMeasurements] = useState([]);
   const [availableTags, setAvailableTags] = useState([]);
   const [validations, setValidations] = useState([]);
+  const [status, setStatus] = useState([]);
   const [numberOfFaildeValidations, setNumberOfFaildeValidations] = useState();
+  const [numberOfPositiveRequests, setNumberOfPositiveRequests] = useState();
+  const [numberOfNegativeRequests, setNumberOfNegativeRequests] = useState();
 
   const token = localStorage.getItem("token");
 
@@ -29,9 +32,24 @@ const AdministratorDashboard = () => {
     let faildeValidations = validations.filter(function (value) {
       return value !== "SUCCESS";
     });
-    console.log("The failed validations are: ", faildeValidations);
     setNumberOfFaildeValidations(faildeValidations.length);
   }, [validations]);
+
+  useEffect(() => {
+    let positiveRequests = status.filter(function (value) {
+      return value == "200";
+    });
+    console.log("The positive requests are: ", positiveRequests);
+    setNumberOfPositiveRequests(positiveRequests.length);
+  }, [status]);
+
+  useEffect(() => {
+    let negativeRequests = status.filter(function (value) {
+      return value !== "200";
+    });
+    console.log("The negative requests are: ", negativeRequests);
+    setNumberOfNegativeRequests(negativeRequests.length);
+  }, [status]);
 
   const getMetrics = async () => {
     try {
@@ -48,39 +66,13 @@ const AdministratorDashboard = () => {
           res.data.availableTags
         );
         console.log(
-          "These are the metrics availableTags: ",
-          res.data.availableTags[4].values
+          "These are the metrics availableTags status: ",
+          res.data.availableTags[5].values
         );
-        // const validations = res.data.availableTags[4].values;
-        // const failedValidations = validations.filter(checkfailedValidations);
-        // function checkfailedValidations(fail) {
-        //   return fail !== "SUCCESS";
-        //   console.log("The number of failed validations are:", failedValidations.length);
-        // }
-        // console.log("----------------------------------------------");
-        // console.log(
-        //   "These are the metrics measurements: ",
-        //   res.data.measurements
-        // );
-        // console.log("----------------------------------------------");
-        // console.log("These are the metrics availableTags: ");
-        // res.data.availableTags.forEach((availableTag) => {
-        //   console.log(availableTag.tag + ":" + availableTag.values);
-        // });
-        // console.log("----------------------------------------------");
-        // console.log("These are the metrics measurements: ");
-        // res.data.measurements.forEach((measurement) => {
-        //   console.log(measurement.statistic + ":" + measurement.value);
-        // });
         setAvailableTags(res.data.availableTags);
         setMeasurements(res.data.measurements);
         setValidations(res.data.availableTags[4].values);
-
-        // let faildeValidations = validations.filter(function (value) {
-        //   return value !== "SUCCESS";
-        // });
-        // console.log("The failed validations are: ", faildeValidations);
-        // setNumberOfFaildeValidations(faildeValidations.length);
+        setStatus(res.data.availableTags[5].values)
       }
     } catch (error) {
       console.log(error);
@@ -106,21 +98,20 @@ const AdministratorDashboard = () => {
           <ShareholderCard
             icon={<PeopleIcon fontSize="large" sx={{ color: "#FF9E0C" }} />}
             shareholderCount={numberOfFaildeValidations}
-            // shareholderCount={22975}
             name={"Number of failed validations"}
           />
         </Grid>
         <Grid item md={3}>
           <ShareholderCard
             icon={<ApartmentIcon fontSize="large" sx={{ color: "#10C682" }} />}
-            shareholderCount={22975}
+            shareholderCount={numberOfPositiveRequests}
             name={"Number of Positive Requests"}
           />
         </Grid>
         <Grid item md={3}>
           <ShareholderCard
             icon={<GroupsIcon fontSize="large" sx={{ color: "#D37B13" }} />}
-            shareholderCount={22975}
+            shareholderCount={numberOfNegativeRequests}
             name={"Number of Negative Requests"}
           />
         </Grid>
