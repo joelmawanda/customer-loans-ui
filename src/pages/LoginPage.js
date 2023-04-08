@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import AlertModal from "../components/alertModal";
 import API from "../config/API";
 import { openAlert, setAlertMessage, setAlertTitle } from "../store/alertSlice";
-import { setLoggedInStatus, setLoggedInUser } from "../store/userSlice";
 import "./LoginPage.css";
 
 const LoginPage = () => {
@@ -32,8 +31,10 @@ const LoginPage = () => {
         },
       });
       if (response.status === 200) {
-        dispatch(setLoggedInUser(response.data));
-        dispatch(setLoggedInStatus(true));
+        // dispatch(setLoggedInUser(response.data));
+        // dispatch(setLoggedInStatus(true));
+        localStorage.setItem("token", response.data);
+        localStorage.setItem("isLoggedIn", true);
         navigate("/administrator-dashboard", { replace: true });
       }
     } catch (error) {

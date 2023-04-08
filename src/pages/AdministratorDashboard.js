@@ -19,7 +19,9 @@ const AdministratorDashboard = () => {
 
   useEffect(() => {
     getMetrics();
-  }, [measurements]);
+  }, []);
+
+  const token = localStorage.getItem("token");
 
   const getMetrics = async () => {
     try {
@@ -27,13 +29,19 @@ const AdministratorDashboard = () => {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${user.loggedInUser}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       if (res.status === 200) {
-        console.log("These are the metrics availableTags: ", res.data.availableTags);
+        console.log(
+          "These are the metrics availableTags: ",
+          res.data.availableTags
+        );
         console.log("----------------------------------------------");
-        console.log("These are the metrics measurements: ", res.data.measurements);
+        console.log(
+          "These are the metrics measurements: ",
+          res.data.measurements
+        );
         console.log("----------------------------------------------");
         console.log("These are the metrics availableTags: ");
         res.data.availableTags.forEach((availableTag) => {
@@ -65,8 +73,7 @@ const AdministratorDashboard = () => {
         <Grid item md={3}>
           <ShareholderCard
             icon={<GroupsIcon fontSize="large" sx={{ color: "#01422A" }} />}
-            // shareholderCount={0}
-            shareholderCount={measurements[0].value}
+            shareholderCount={measurements[0]?.value ?? 0}
             name={"Number of Requests"}
           />
         </Grid>

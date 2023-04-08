@@ -7,11 +7,11 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import jwt_decode from "jwt-decode";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { setLoggedInStatus, setLoggedInUser } from "../../store/userSlice";
-
 
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
@@ -40,6 +40,11 @@ export default function MenuAppBar() {
     navigate("/");
   };
 
+  const token = localStorage.getItem("token");
+  const decodedToken = jwt_decode(token);
+  // localStorage.setItem("username", decodedToken.sub);
+  const username = decodedToken.sub
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -55,6 +60,9 @@ export default function MenuAppBar() {
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Customer Loans
+          </Typography>
+          <Typography variant="h6" component="div" sx={{}}>
+            Welcome, {username}
           </Typography>
           {auth && (
             <div>
