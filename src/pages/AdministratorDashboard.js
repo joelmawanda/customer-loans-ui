@@ -16,12 +16,22 @@ const AdministratorDashboard = () => {
   const user = useSelector((state) => state.user);
   const [measurements, setMeasurements] = useState([]);
   const [availableTags, setAvailableTags] = useState([]);
+  const [validations, setValidations] = useState([]);
+  const [numberOfFaildeValidations, setNumberOfFaildeValidations] = useState();
+
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     getMetrics();
   }, []);
 
-  const token = localStorage.getItem("token");
+  useEffect(() => {
+    let faildeValidations = validations.filter(function (value) {
+      return value !== "SUCCESS";
+    });
+    console.log("The failed validations are: ", faildeValidations);
+    setNumberOfFaildeValidations(faildeValidations.length);
+  }, [validations]);
 
   const getMetrics = async () => {
     try {
@@ -37,25 +47,40 @@ const AdministratorDashboard = () => {
           "These are the metrics availableTags: ",
           res.data.availableTags
         );
-        console.log("----------------------------------------------");
         console.log(
-          "These are the metrics measurements: ",
-          res.data.measurements
+          "These are the metrics availableTags: ",
+          res.data.availableTags[4].values
         );
-        console.log("----------------------------------------------");
-        console.log("These are the metrics availableTags: ");
-        res.data.availableTags.forEach((availableTag) => {
-          console.log(availableTag.tag + ":" + availableTag.values);
-        });
-        console.log("----------------------------------------------");
-        console.log("These are the metrics measurements: ");
-        res.data.measurements.forEach((measurement) => {
-          console.log(measurement.statistic + ":" + measurement.value);
-        });
+        // const validations = res.data.availableTags[4].values;
+        // const failedValidations = validations.filter(checkfailedValidations);
+        // function checkfailedValidations(fail) {
+        //   return fail !== "SUCCESS";
+        //   console.log("The number of failed validations are:", failedValidations.length);
+        // }
+        // console.log("----------------------------------------------");
+        // console.log(
+        //   "These are the metrics measurements: ",
+        //   res.data.measurements
+        // );
+        // console.log("----------------------------------------------");
+        // console.log("These are the metrics availableTags: ");
+        // res.data.availableTags.forEach((availableTag) => {
+        //   console.log(availableTag.tag + ":" + availableTag.values);
+        // });
+        // console.log("----------------------------------------------");
+        // console.log("These are the metrics measurements: ");
+        // res.data.measurements.forEach((measurement) => {
+        //   console.log(measurement.statistic + ":" + measurement.value);
+        // });
         setAvailableTags(res.data.availableTags);
         setMeasurements(res.data.measurements);
+        setValidations(res.data.availableTags[4].values);
 
-        console.log("Weeeee", measurements[0].value);
+        // let faildeValidations = validations.filter(function (value) {
+        //   return value !== "SUCCESS";
+        // });
+        // console.log("The failed validations are: ", faildeValidations);
+        // setNumberOfFaildeValidations(faildeValidations.length);
       }
     } catch (error) {
       console.log(error);
@@ -80,7 +105,8 @@ const AdministratorDashboard = () => {
         <Grid item md={3}>
           <ShareholderCard
             icon={<PeopleIcon fontSize="large" sx={{ color: "#FF9E0C" }} />}
-            shareholderCount={22975}
+            shareholderCount={numberOfFaildeValidations}
+            // shareholderCount={22975}
             name={"Number of failed validations"}
           />
         </Grid>
