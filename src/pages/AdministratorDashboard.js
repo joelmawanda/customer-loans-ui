@@ -14,7 +14,7 @@ const AdministratorDashboard = () => {
   const { sidebar } = navigationContext;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const [measurements, setMeasurements] = useState([]);
+  const [measurements, setMeasurements] = useState();
   const [availableTags, setAvailableTags] = useState([]);
   const [validations, setValidations] = useState([]);
   const [status, setStatus] = useState([]);
@@ -61,7 +61,7 @@ const AdministratorDashboard = () => {
       });
       if (res.status === 200) {
         setAvailableTags(res.data.availableTags);
-        setMeasurements(res.data.measurements);
+        setMeasurements(res.data.measurements[0].value);
         setValidations(res.data.availableTags[4].values);
         setStatus(res.data.availableTags[5].values);
       }
@@ -81,7 +81,7 @@ const AdministratorDashboard = () => {
         <Grid item md={3}>
           <ShareholderCard
             icon={<GroupsIcon fontSize="large" sx={{ color: "#01422A" }} />}
-            shareholderCount={measurements[0]?.value ?? 0}
+            shareholderCount={measurements}
             name={"Number of Requests"}
           />
         </Grid>
