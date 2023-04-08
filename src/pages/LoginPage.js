@@ -31,10 +31,7 @@ const LoginPage = () => {
         },
       });
       if (response.status === 200) {
-        // dispatch(setLoggedInUser(response.data));
-        // dispatch(setLoggedInStatus(true));
         localStorage.setItem("token", response.data);
-        localStorage.setItem("isLoggedIn", true);
         navigate("/administrator-dashboard", { replace: true });
       }
     } catch (error) {

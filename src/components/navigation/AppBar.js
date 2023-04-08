@@ -11,7 +11,6 @@ import jwt_decode from "jwt-decode";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { setLoggedInStatus, setLoggedInUser } from "../../store/userSlice";
 
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
@@ -35,15 +34,13 @@ export default function MenuAppBar() {
   // };
 
   const handleClose = () => {
-    dispatch(setLoggedInUser({}));
-    dispatch(setLoggedInStatus(false));
+    localStorage.clear();
     navigate("/");
   };
 
   const token = localStorage.getItem("token");
   const decodedToken = jwt_decode(token);
-  // localStorage.setItem("username", decodedToken.sub);
-  const username = decodedToken.sub
+  const username = decodedToken.sub;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
