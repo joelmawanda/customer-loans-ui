@@ -39,7 +39,7 @@ const AdministratorDashboard = () => {
     let positiveRequests = status.filter(function (value) {
       return value == "200";
     });
-    console.log("The positive requests are: ", positiveRequests);
+
     setNumberOfPositiveRequests(positiveRequests.length);
   }, [status]);
 
@@ -47,7 +47,6 @@ const AdministratorDashboard = () => {
     let negativeRequests = status.filter(function (value) {
       return value !== "200";
     });
-    console.log("The negative requests are: ", negativeRequests);
     setNumberOfNegativeRequests(negativeRequests.length);
   }, [status]);
 
@@ -61,18 +60,10 @@ const AdministratorDashboard = () => {
         },
       });
       if (res.status === 200) {
-        console.log(
-          "These are the metrics availableTags: ",
-          res.data.availableTags
-        );
-        console.log(
-          "These are the metrics availableTags status: ",
-          res.data.availableTags[5].values
-        );
         setAvailableTags(res.data.availableTags);
         setMeasurements(res.data.measurements);
         setValidations(res.data.availableTags[4].values);
-        setStatus(res.data.availableTags[5].values)
+        setStatus(res.data.availableTags[5].values);
       }
     } catch (error) {
       console.log(error);
