@@ -23,8 +23,9 @@ const LoginPage = () => {
   const login = async (event) => {
     event.preventDefault();
     let data = { username, password };
+    let response;
     try {
-      const response = await API.post(`/api/v1/loans/authenticate`, data, {
+      response = await API.post(`/api/v1/loans/authenticate`, data, {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
@@ -35,8 +36,7 @@ const LoginPage = () => {
         navigate("/administrator-dashboard", { replace: true });
       }
     } catch (error) {
-      console.log("We are in the login catch... Error: ", error);
-      dispatch(setAlertMessage("Invalid User"));
+      dispatch(setAlertMessage(error.response.data.message));
       dispatch(setAlertTitle("Error"));
       dispatch(openAlert());
       navigate("/", { replace: true });
