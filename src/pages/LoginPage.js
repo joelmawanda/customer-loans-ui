@@ -31,7 +31,7 @@ const LoginPage = () => {
         },
       });
       if (response.status === 200) {
-        localStorage.setItem("token", response.data);
+        localStorage.setItem("token", response.data.data);
         navigate("/administrator-dashboard", { replace: true });
       }
     } catch (error) {
