@@ -87,7 +87,7 @@ const LoginPage = () => {
                       <Col sm={10} md={10} lg={10}>
                         <Form.Control
                           id="b_boarder_input"
-                          placeholder="Username/Email/Phone"
+                          placeholder="Username"
                           onChange={(e) => setUsername(e.target.value)}
                         ></Form.Control>
                       </Col>
