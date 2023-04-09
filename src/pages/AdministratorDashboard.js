@@ -2,20 +2,13 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PeopleIcon from "@mui/icons-material/People";
 import { Box, Grid } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import ShareholderCard from "../components/AdministratorDashboard/ShareholderCard";
 import MenuAppBar from "../components/navigation/AppBar";
 import API from "../config/API";
-import NavigationContext from "../store/NavigationContext";
 
 const AdministratorDashboard = () => {
-  const navigationContext = useContext(NavigationContext);
-  const { sidebar } = navigationContext;
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const [measurements, setMeasurements] = useState();
-  const [availableTags, setAvailableTags] = useState([]);
+  const [numberOfRequests, setNumberOfRequests] = useState();
   const [validations, setValidations] = useState([]);
   const [status, setStatus] = useState([]);
   const [numberOfFaildeValidations, setNumberOfFaildeValidations] = useState();
@@ -60,10 +53,10 @@ const AdministratorDashboard = () => {
         },
       });
       if (res.status === 200) {
-        setAvailableTags(res.data.availableTags);
-        setMeasurements(res.data.measurements[0].value);
-        setValidations(res.data.availableTags[4].values);
-        setStatus(res.data.availableTags[5].values);
+        console.log("The metrics: ", res.data.measurements[0].value);
+        setNumberOfRequests(res.data.measurements[0].value);
+        setValidations(res.data.availableTags[2].values);
+        setStatus(res.data.availableTags[3].values);
       }
     } catch (error) {
       console.log(error);
@@ -81,7 +74,7 @@ const AdministratorDashboard = () => {
         <Grid item md={3}>
           <ShareholderCard
             icon={<GroupsIcon fontSize="large" sx={{ color: "#01422A" }} />}
-            shareholderCount={measurements}
+            shareholderCount={numberOfRequests}
             name={"Number of Requests"}
           />
         </Grid>

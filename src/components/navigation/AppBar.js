@@ -9,29 +9,17 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import jwt_decode from "jwt-decode";
 import * as React from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
-
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  //   navigate("/");
-  // };
 
   const handleClose = () => {
     localStorage.clear();
