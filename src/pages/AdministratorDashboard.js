@@ -52,7 +52,7 @@ const AdministratorDashboard = () => {
 
   const getMetrics = async () => {
     try {
-      const res = await API.get(`/admin/metrics/http.server.requests`, {
+      const res = await API.get(`/admin/metrics/http.server.requests?tag=method:GET&tag=uri:/api/v1/loans/status`, {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
