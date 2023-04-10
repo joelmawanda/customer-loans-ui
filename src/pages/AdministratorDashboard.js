@@ -50,6 +50,15 @@ const AdministratorDashboard = () => {
                     break;
                 }
               });
+
+              break;
+            case "exception":
+            case "error":
+              tag.values.forEach((value) => {
+                if (value !== "none") {
+                  setNumFailedValidations(numFailedValidations + 1);
+                }
+              });
               break;
             default:
               break;
