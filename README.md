@@ -2,6 +2,7 @@
 This is a simple, restricted admin interface that provides a view of the customer-loans APIs performance i.e. number of requests, number of failed validations, number of positive requests (at least one loan) and number of negative requests (zero outstanding loans).
 
 # Getting started
+This admin interface is developed react js and the reasons are:- React is flexible, has a great developer experience, it has facebook's support/resources, it has a broad community, great perfomance and it is easy to test.
 # Prerequisites
   •	Docker
 # Clone the repository
