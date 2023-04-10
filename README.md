@@ -5,7 +5,7 @@ This is a simple, restricted admin interface that provides a view of the custome
 # Prerequisites
   •	Docker
 # Clone the repository
-git clone https://github.com/joelmawanda/customer-loans.git
+git clone https://github.com/joelmawanda/customer-loans-ui.git
 # Run the application
   1. **Docker build -t app .**
   2. **Docker run -p 8080:8080 app**
