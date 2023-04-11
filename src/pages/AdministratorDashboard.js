@@ -42,11 +42,15 @@ const AdministratorDashboard = () => {
                 switch (outcome) {
                   case "SUCCESS":
                     // setNumPositiveRequests(numPositiveRequests + 1);
-                    setNumPositiveRequests(prevNumPositiveRequests => prevNumPositiveRequests + 1);
+                    setNumPositiveRequests(
+                      (prevNumPositiveRequests) => prevNumPositiveRequests + 1
+                    );
                     break;
                   case "CLIENT_ERROR":
                     // setNumNegativeRequests(numNegativeRequests + 1);
-                    setNumNegativeRequests(prevNumNegativeRequests => prevNumNegativeRequests + 1);
+                    setNumNegativeRequests(
+                      (prevNumNegativeRequests) => prevNumNegativeRequests + 1
+                    );
                     break;
                   default:
                     break;
@@ -59,7 +63,9 @@ const AdministratorDashboard = () => {
               tag.values.forEach((value) => {
                 if (value !== "none") {
                   // setNumFailedValidations(numFailedValidations + 1);
-                  setNumFailedValidations(prevNumFailedValidations => prevNumFailedValidations + 1);
+                  setNumFailedValidations(
+                    (prevNumFailedValidations) => prevNumFailedValidations + 1
+                  );
                 }
               });
               break;
